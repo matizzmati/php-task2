@@ -8,6 +8,7 @@ $scraper = new Scraper('http://estoremedia.space/DataIT/');
 
 $scraper->test();
 $scraper->getPages();
+$scraper->getProductPages();
 
 
 ?>

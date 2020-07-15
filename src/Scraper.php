@@ -6,6 +6,7 @@ use simplehtmldom\HtmlWeb;
 
 class Scraper extends HtmlWeb
 {
+    private $weburl;
     private $html;
     private $pages = array();
     private $productLinks = array();
@@ -13,6 +14,7 @@ class Scraper extends HtmlWeb
 
     function __construct($url)
     {
+        $this->weburl = $url;
         $this->html = $this->load($url);
     }
 
@@ -25,10 +27,24 @@ class Scraper extends HtmlWeb
     {
         foreach ($this->html->find('[data-page]') as $page)
         {
-            $this->pages[] = 'http://estoremedia.space/DataIT/?page=' . $page->{'data-page'};
+            $this->pages[] = $this->weburl . '?page=' . $page->{'data-page'};
         }
 
         $this->pages = array_unique($this->pages);
+    }
+
+    public function getProductPages()
+    {
+        foreach ($this->pages as $page)
+        {
+            $pageHtml = $this->load($page);
+            foreach ($pageHtml->find('.card .title') as $product)
+            {
+                $this->productLinks[] = $this->weburl . $product->href;
+            }
+        }
+
+        print_r($this->productLinks);
     }
 }
 
