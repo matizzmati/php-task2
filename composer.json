@@ -1,5 +1,8 @@
 {
     "require": {
         "simplehtmldom/simplehtmldom": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {"webscraper\\": "src/"}
     }
 }
