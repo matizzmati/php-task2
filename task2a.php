@@ -15,11 +15,17 @@
     
     $product = new ProductHtml($html);
     
-    $img = $product->getImg('.card-img-top');
-
-
+    $product->addAttribute(['.price', '.price-promo'], 'innertext', 'price');
+    $product->addAttribute(['.price-old'], 'innertext', 'price_old');
+    $product->addAttribute(['.card-img-top'], 'src', 'img');
+    $product->addAttribute(['.card-body .card-text'], 'innertext', 'name');
+    $product->addReviews('reviews');
+    $product->addRate('rate');
+    $product->addVariantsAndCode();
+    
+    $productObject = $product->getProduct();
     
     $template = $twig->load('task2a.html');
-    echo $template->render(['img' => $img]);
+    echo $template->render(['product' => $productObject]);
 
 ?>

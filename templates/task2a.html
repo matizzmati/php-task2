@@ -2,11 +2,59 @@
 
 {% block head %}
     <style type="text/css">
-        .back { padding:10px;display:block;margin-bottom:5vh;border:2px solid black;text-align:center;width:100px;}
+        .back {padding:10px;display:block;margin-bottom:5vh;border:2px solid black;text-align:center;width:100px;}
+        div{padding:3px;}
+        .desc {font-weight:bold;}
+        .variant {border: 1px solid black;}
     </style>
 {% endblock %}
 
 {% block content %}
     <div><a class="back" href="task2.php"><-- BACK</a></div>
-    {{ img }}
+    <div>
+        <div class="desc">Cena</div>
+        <div>{{ product.price }}</div>
+    </div>
+    <div>
+        <div class="desc">Stara cena</div>
+        <div>{{ product.price_old }}</div>
+    </div>
+    <div>
+        <div class="desc">Url zdjęcia</div>
+        <div>{{ product.img }}</div>
+    </div>
+    <div>
+        <div class="desc">Kod produktu</div>
+        <div>{{ product.code }}</div>
+    </div>
+    <div>
+        <div class="desc">Liczba ocen</div>
+        <div>{{ product.reviews }}</div>
+    </div>
+    <div>
+        <div class="desc">Liczba gwiazdek</div>
+        <div>{{ product.rate }}</div>
+    </div>
+    {% if product.variants %}
+        <h2>WARIANTY</h2>
+        {% for key, variant in product.variants %}
+        <div class="variant">
+            <div>
+                <div class="desc">Nazwa</div>
+                <div>{{ product.name ~ " #" ~ key }}</div>
+            </div>
+            <div>
+                <div class="desc">Cena</div>
+                <div>{{ variant.price }}</div>
+            </div>
+            {% if variant.price_old %}
+                <div>
+                    <div class="desc">Stara cena</div>
+                    <div>{{ variant.price_old }}</div>
+                </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% endif %}
+    
 {% endblock %}
