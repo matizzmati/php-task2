@@ -38,7 +38,7 @@
                 {
                     echo 
                     '<tr>
-                        <td class="tg-0lax"><a target="_blank" href="/task2a.php?product_url=' . $value[1] . '">' . $value[0] . '</a></td>
+                        <td class="tg-0lax"><a href="/task2a.php?product_url=' . $value[1] . '">' . $value[0] . '</a></td>
                         <td class="tg-0lax"><a target="_blank" href="' . $value[1] . '">' . $value[1] . '</td>
                         <td class="tg-0lax"><a target="_blank" href="' . $value[2] . '">' . $value[2] . '</td>
                         <td class="tg-0lax">' . $value[3] . '</td>
