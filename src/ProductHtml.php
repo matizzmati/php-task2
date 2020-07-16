@@ -14,15 +14,11 @@ class ProductHtml
     public function addAttribute($selectors, $attr, $name)
     {
         $value = 'not found';
-        foreach($selectors as $selector)
-        {
+        foreach ($selectors as $selector) {
             $el = $this->html->find($selector, 0);
-            if ($el)
-            {
+            if ($el) {
                 $value = $el->{$attr};
-            }
-            else
-            {
+            } else {
                 continue;
             }
         }
@@ -34,8 +30,7 @@ class ProductHtml
     {
         $value = 'not found';
         $el = $this->html->find('.card-footer .text-muted', 0);
-        if ($el)
-        {
+        if ($el) {
             preg_match('/\((.+)\)/', $el->innertext, $reviews);
             $value = $reviews[1];
         }
@@ -47,8 +42,7 @@ class ProductHtml
     {
         $value = 'not found';
         $el = $this->html->find('.card-footer .text-muted', 0);
-        if ($el)
-        {
+        if ($el) {
             $allstars = explode(" ", $el->innertext);
             $stars = base64_encode($allstars[0]);
             $starString = "4piF";
@@ -61,9 +55,8 @@ class ProductHtml
     public function addVariantsAndCode()
     {
         $scripts = $this->html->find('script');
-        foreach($scripts as $s)
-        {
-            if(strpos($s->innertext, 'products')) {
+        foreach ($scripts as $s) {
+            if (strpos($s->innertext, 'products')) {
                 $script = $s->innertext;
             }
         }

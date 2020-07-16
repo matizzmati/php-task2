@@ -23,8 +23,7 @@ class Scraper
 
     public function getPages()
     {
-        foreach ($this->html->find('[data-page]') as $page)
-        {
+        foreach ($this->html->find('[data-page]') as $page) {
             $this->pages[] = $this->weburl . '?page=' . $page->{'data-page'};
         }
 
@@ -37,8 +36,7 @@ class Scraper
     {
         $productData = array();
 
-        foreach ($pageHtml->find('.card') as $product)
-        {
+        foreach ($pageHtml->find('.card') as $product) {
             # name 
             $productData["name"] = $this->getElement($product, '.title', 'data-name');
             
@@ -67,12 +65,9 @@ class Scraper
     {
 
         $el = $productHtml->find($selector, 0);
-        if ( $el )
-        {
+        if ($el) {
             return $el->{$attr};
-        }
-        else
-        {
+        } else {
             return 'not found';
         }
      
@@ -81,13 +76,10 @@ class Scraper
     private function getReviews($productHtml)
     {
         $el = $productHtml->find('.card-footer .text-muted', 0);
-        if ($el)
-        {
+        if ($el) {
             preg_match('/\((.+)\)/', $el->innertext, $reviews);
             return $reviews[1];
-        }
-        else
-        {
+        } else {
             return 'not found';
         }
     }
@@ -95,15 +87,12 @@ class Scraper
     private function getRate($productHtml)
     {
         $el = $productHtml->find('.card-footer .text-muted', 0);
-        if ($el)
-        {
+        if ($el) {
             $allstars = explode(" ", $el->innertext);
             $stars = base64_encode($allstars[0]);
             $starString = "4piF";
             return substr_count($stars, $starString);
-        }
-        else
-        {
+        } else {
             return 'not found';
         }
     }
