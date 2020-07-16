@@ -1,10 +1,7 @@
 <?php namespace webscraper;
 
-require './vendor/autoload.php';
 
-use simplehtmldom\HtmlWeb;
-
-class Scraper extends HtmlWeb
+class Scraper
 {
     private $weburl;
     private $html;
@@ -12,10 +9,10 @@ class Scraper extends HtmlWeb
     private $productLinks = array();
     
 
-    function __construct($url)
+    function __construct($url, $html)
     {
         $this->weburl = $url;
-        $this->html = $this->load($url);
+        $this->html = $html;
     }
 
     public function test()
@@ -31,6 +28,8 @@ class Scraper extends HtmlWeb
         }
 
         $this->pages = array_unique($this->pages);
+
+        return $this->pages;
     }
 
     public function getProductPages()
