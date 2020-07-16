@@ -5,29 +5,38 @@ require __DIR__ . '/vendor/autoload.php';
 use simplehtmldom\HtmlWeb;
 use webscraper\Scraper;
 
+############ scrap page ############
+
 $url = 'http://estoremedia.space/DataIT/';
 $client = new HtmlWeb();
 $html = $client->load($url);
 
 $scraper = new Scraper($url, $html);
 
-//$scraper->test();
+$pageUrls = $scraper->getPages();
+$pagesObjects = array_map(function ($page) { $client = new HtmlWeb(); return $client->load($page); }, $pageUrls);
+$productUrls = $scraper->getProductUrls($pagesObjects);
 
-$pages = $scraper->getPages();
-$productLinks = array();
-
-foreach ($pages as $page)
-{
-    $pageHtml = $client->load($page);
-    foreach ($pageHtml->find('.card .title') as $product)
-    {
-        $productLinks[] = $url . $product->href;
-    }
+foreach ($productUrls as $productUrl) {
+    $scraper->addProductData( $client->load($productUrl), $productUrl);
 }
 
-$product1html = $client->load($productLinks[0]);
-$product1 = $product1html->find('.card .card-text', 0);
-print_r($product1->innertext);
+$products = $scraper->getProducts();
 
+
+############ save to csv ############
+
+if (file_exists('file.csv'))
+{
+    unlink('file.csv');
+}
+
+$fp = fopen('file.csv', 'w');
+fputcsv($fp, array_keys($products[0]));
+foreach ($products as $row) {
+    fputcsv($fp, $row);
+}
+
+fclose($fp);
 
 ?>
