@@ -33,60 +33,49 @@ class Scraper
         return $this->pages;
     }
 
-    public function getProductUrls($pages)
-    {
-        foreach ($pages as $page)
-        {
-            foreach ($page->find('.card .title') as $product)
-            {
-                $this->productLinks[] = $this->weburl . $product->href;
-            }
-        }
-
-        return $this->productLinks;
-    }
-
-    public function addProductData($productHtml, $url)
+    public function addProductsData($pageHtml)
     {
         $productData = array();
 
-        # name 
-        $productData["name"] = $this->getElement($productHtml, ['.card .card-text'], 'innertext');
+        foreach ($pageHtml->find('.card') as $product)
+        {
+            # name 
+            $productData["name"] = $this->getElement($product, '.title', 'data-name');
+            
+            # url
+            $productData["url"] = $this->weburl . $this->getElement($product, '.title', 'href');
 
-        # url
-        $productData["url"] = $url;
+            # img
+            $productData["img"] = $this->getElement($product, '.card-img-top', 'src');
+            
+            # price
+            $productData["price"] = $this->getElement($product, '.card-body h5', 'innertext');
 
-        # img
-        $productData["img"] = $this->getElement($productHtml, ['.card-img-top'], 'src');
+            # reviews
+            $productData["reviews"] = $this->getReviews($product);
+
+            # stars
+            $productData["rate"] = $this->getRate($product);
+            
+            
+            $this->products[] = $productData;
+        }
         
-        # price
-        $productData["price"] = $this->getElement($productHtml, ['.price', '.price-promo'], 'innertext');
-
-        # reviews
-        $productData["reviews"] = $this->getReviews($productHtml);
-
-        # stars
-        $productData["rate"] = $this->getRate($productHtml);
-        
-
-        $this->products[] = $productData;
     }
 
-    private function getElement($productHtml, $selectors, $attr)
+    private function getElement($productHtml, $selector, $attr)
     {
-        foreach ($selectors as $selector)
+
+        $el = $productHtml->find($selector, 0);
+        if ( $el )
         {
-            $el = $productHtml->find($selector, 0);
-            if ( $el )
-            {
-                return $el->{$attr};
-            }
-            else
-            {
-                continue;
-            }
+            return $el->{$attr};
         }
-        return 'not found';
+        else
+        {
+            return 'not found';
+        }
+     
     }
 
     private function getReviews($productHtml)

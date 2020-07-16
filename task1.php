@@ -14,11 +14,8 @@ $html = $client->load($url);
 $scraper = new Scraper($url, $html);
 
 $pageUrls = $scraper->getPages();
-$pagesObjects = array_map(function ($page) { $client = new HtmlWeb(); return $client->load($page); }, $pageUrls);
-$productUrls = $scraper->getProductUrls($pagesObjects);
-
-foreach ($productUrls as $productUrl) {
-    $scraper->addProductData( $client->load($productUrl), $productUrl);
+foreach ($pageUrls as $url) {
+    $scraper->addProductsData($client->load($url));
 }
 
 $products = $scraper->getProducts();
@@ -38,5 +35,7 @@ foreach ($products as $row) {
 }
 
 fclose($fp);
+
+echo "scraping finished, records saved to file.csv" . PHP_EOL;
 
 ?>
