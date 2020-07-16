@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+        font-weight:bold;overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg .tg-0lax{text-align:left;vertical-align:top}
+    </style>
+{% endblock %}
+
+{% block content %}
+<table class="tg">
+    <thead>
+        <tr>
+            <th class="tg-0lax">{{ firstRow[0] }}</th>
+            <th class="tg-0lax">{{ firstRow[1] }}</th>
+            <th class="tg-0lax">{{ firstRow[2] }}</th>
+            <th class="tg-0lax">{{ firstRow[3] }}</th>
+            <th class="tg-0lax">{{ firstRow[4] }}</th>
+            <th class="tg-0lax">{{ firstRow[5] }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td class="tg-0lax"><a href="/task2a.php?product_url={{ product[1] }}">{{ product[0] }}</a></td>
+            <td class="tg-0lax"><a target="_blank" href="{{ product[1] }}">{{ product[1] }}</td>
+            <td class="tg-0lax"><a target="_blank" href="{{ product[2] }}">{{ product[2] }}</td>
+            <td class="tg-0lax">{{ product[3] }}</td>
+            <td class="tg-0lax">{{ product[4] }}</td>
+            <td class="tg-0lax">{{ product[5] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+{% endblock %}

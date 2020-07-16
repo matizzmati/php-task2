@@ -1,6 +1,7 @@
 {
     "require": {
-        "simplehtmldom/simplehtmldom": "dev-master"
+        "simplehtmldom/simplehtmldom": "dev-master",
+        "twig/twig": "^3.0"
     },
     "autoload": {
         "psr-4": {"webscraper\\": "src/"}

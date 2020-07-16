@@ -20,7 +20,6 @@ class ProductHtml
         return 'not found';
     }
 
-    public function test() { echo 'test10a'; }
 }
 
 ?>
