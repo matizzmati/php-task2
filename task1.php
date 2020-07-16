@@ -21,7 +21,7 @@ foreach ($pageUrls as $url) {
 $products = $scraper->getProducts();
 
 
-############ save to csv ############
+############ save to csv ###########
 
 if (file_exists('file.csv'))
 {
