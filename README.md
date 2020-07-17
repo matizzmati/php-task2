@@ -11,4 +11,7 @@ Wymagane jest wcześniejsze uruchomienie skryptu z zadania 1 do utworzenia pliku
 Do uruchomienia skryptu najprościej użyć wbudowanego w php web serwera, wpisując komendę będąc w katalogu projektu:\
 ``` php -S localhost:8000 ```\
 Następnie wejść pod adres\
-``` http://localhost:8000/task2.php ```
+``` http://localhost:8000/task2.php ```\
+\
+\
+Mateusz Zięba
